@@ -1,0 +1,51 @@
+group 'de.allmaennitta.mindware'
+version '0.9-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'io.spring.gradle:dependency-management-plugin:1.0.0.RELEASE'
+    }
+}
+
+
+
+
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:Brussels-SR5'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'javax.servlet', name: 'javax.servlet-api'
+
+//    compile group: 'org.hsqldb', name: 'hsqldb'
+//    compile group: 'org.hibernate', name: 'hibernate-validator'
+    compile group: 'ch.qos.logback', name: 'logback-classic'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    compile group: 'com.fasterxml.jackson.core.dataformat', name: 'jackson-dataformat-yaml'
+    compile group: 'org.springframework.data', name: 'spring-data-neo4j'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.5'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
