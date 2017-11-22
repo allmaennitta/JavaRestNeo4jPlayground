@@ -18,6 +18,8 @@ fi
 IFS=':'
 read -a UNAME_PASS <<< "$INPUT"
 
+echo "IBE ******************* ${UNAME_PASS[0]}"
+
 UNAME="${UNAME_PASS[0]}"
 PASS="${UNAME_PASS[1]}"
 
@@ -39,8 +41,8 @@ IFS=' '
 read -a PASSWORD_HASH_ARRAY <<< $(printf $HEX_SALT$HEX_PASS | sha256sum)
 PASSWORD_HASH="${PASSWORD_HASH_ARRAY[0]}"
 
-# echo "$UNAME;$PASS;$SALT"
-# echo "$PASSWORD_HASH"
+#echo "IBE ******************* $UNAME;$PASS;$SALT"
+#echo "IBE ******************* $PASSWORD_HASH"
 
 # and print out the auth string
 COMBINED=$(echo -n "$PASSWORD_HASH,$SALT" | awk '{print toupper($1);}')
