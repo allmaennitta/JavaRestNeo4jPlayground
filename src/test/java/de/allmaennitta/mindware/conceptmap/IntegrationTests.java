@@ -42,6 +42,6 @@ public class IntegrationTests {
     extract().
             response().body().print();
 
-    assertThat(JsonPath.from(json).getString("nodes[0].name")).isEqualTo("amsel");
+    assertThat(JsonPath.from(json).getString("nodes[0].name")).isEqualTo("Amsel");
   }
 }

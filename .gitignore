@@ -2,3 +2,4 @@
 target/
 docker/data
 
+out/

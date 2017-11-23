@@ -3,6 +3,7 @@ package de.allmaennitta.mindware.conceptmap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +29,8 @@ public class NodeControllerTests {
   public void findRoot() throws Exception {
     this.mockMvc.perform(get("/")
         .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-        .andExpect(status().is3xxRedirection());
+        .andExpect(status().is3xxRedirection())
+        .andExpect(header().string("Location", "/node/all"));
   }
 
   @Test
@@ -37,7 +39,7 @@ public class NodeControllerTests {
         .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.nodes[0].name").value("amsel"));
+        .andExpect(jsonPath("$.nodes[0].name").value("Amsel"));
   }
 
 
