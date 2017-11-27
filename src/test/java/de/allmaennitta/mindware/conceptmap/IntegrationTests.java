@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.embedded.LocalServerPort;
@@ -21,15 +20,6 @@ public class IntegrationTests {
   @LocalServerPort
   int port;
 
-  //  @Autowired
-//  private TestRestTemplate restTemplate;
-//
-//  @Test
-//  public void rootTest() {
-//    String body = this.restTemplate.getForObject("/", String.class);
-//    assertThat(body).isEqualTo("Hello World");
-//  }
-
   @Test
   public void rootTest() {
     RestAssured.port = port;
@@ -43,5 +33,20 @@ public class IntegrationTests {
             response().body().print();
 
     assertThat(JsonPath.from(json).getString("nodes[0].name")).isEqualTo("Amsel");
+  }
+
+  @Test
+  public void byNameTest() {
+    RestAssured.port = port;
+    String json =
+        when().
+            get("/node/Amsel").
+            then().
+            contentType(JSON).
+            statusCode(200).
+            extract().
+            response().body().print();
+
+    assertThat(JsonPath.from(json).getLong("id")).isEqualTo(1L);
   }
 }

@@ -6,7 +6,7 @@ services:
       - 7474:7474
       - 7687:7687
     volumes:
-      - C:/Users/ingo/Development/scala/Mindware/docker/data:/var/lib/neo4j/data
+      - C:/Users/ingo/Development/java/Mindware/Semanticweb/docker/data:/var/lib/neo4j/data
     environment:
      - NEO4J_AUTH=ingo:ingo
     cap_add:

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
+//@RequestMapping(path="/node")
 class NodeController {
 
   private static final Logger LOG = LoggerFactory.getLogger(NodeController.class);
@@ -38,6 +39,11 @@ class NodeController {
     Map nodes = new HashMap();
     nodes.put("nodes", nodeRepository.findAllNodes());
     return nodes;
+  }
+
+  @RequestMapping(value = "/node/{name}", method = RequestMethod.GET)
+  Node getNode(@PathVariable("name") String name) {
+    return nodeRepository.findByName(name);
   }
 }
 //

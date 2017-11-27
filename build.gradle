@@ -37,16 +37,14 @@ dependencyManagement {
 
 
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'javax.servlet', name: 'javax.servlet-api'
 
-    compile group: 'org.hsqldb', name: 'hsqldb'
-    compile group: 'org.hibernate', name: 'hibernate-validator'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-neo4j'
+//    compile group: 'org.hsqldb', name: 'hsqldb'
+//    compile group: 'org.hibernate', name: 'hibernate-validator'
 //    compile group: 'org.springframework.data', name: 'spring-data-neo4j'
-c//    compile 'org.neo4j.driver:neo4j-java-driver:1.4.5'
+//    compile 'org.neo4j.driver:neo4j-java-driver:1.4.5'
 //    compile group: 'org.neo4j.driver', name: 'neo4j-java-driver', version: '1.4.5'
-    ompile group: 'org.springframework.boot', name: 'spring-boot-starter-data-neo4j'
 
     compile group: 'ch.qos.logback', name: 'logback-classic'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
@@ -55,12 +53,14 @@ c//    compile 'org.neo4j.driver:neo4j-java-driver:1.4.5'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 //    compile group: 'com.fasterxml.jackson.core.dataformat', name: 'jackson-dataformat-yaml'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.5'
 
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'javax.servlet', name: 'javax.servlet-api'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
-    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core'
-    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el'
-    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
+//    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core'
+//    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el'
+//    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
 }

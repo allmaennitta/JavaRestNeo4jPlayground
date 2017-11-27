@@ -28,7 +28,7 @@ public class NodeControllerTests {
   @Test
   public void findRoot() throws Exception {
     this.mockMvc.perform(get("/")
-        .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(status().is3xxRedirection())
         .andExpect(header().string("Location", "/node/all"));
   }
@@ -36,10 +36,19 @@ public class NodeControllerTests {
   @Test
   public void allNodes() throws Exception {
     this.mockMvc.perform(get("/node/all")
-        .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
         .andExpect(jsonPath("$.nodes[0].name").value("Amsel"));
+  }
+
+  @Test
+  public void nodeByName() throws Exception {
+    this.mockMvc.perform(get("/node/Amsel")
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("@.id").value(1));
   }
 
 
