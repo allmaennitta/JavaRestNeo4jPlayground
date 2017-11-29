@@ -27,16 +27,18 @@ public class NodeJsonTests {
 
   @Test
   public void testDeserialize() throws Exception {
-    String content = "{\"name\":\"Ursula\"}";
+    String content = "{\"name\":\"Ursula\", \"id\": 33}";
+    ExpectedNode expected = new ExpectedNode(33L, "Ursula");
+
     assertThat(this.json.parse(content))
-        .isEqualTo(new Node("Ursula"));
+        .isEqualTo(expected);
     assertThat(this.json.parseObject(content).getName()).isEqualTo("Ursula");
   }
 
-  @Test
-  public void multiplicationOfZeroIntegersShouldReturnZero() {
-    assertThat("a").as("test context").isEqualTo("a");
+  class ExpectedNode extends Node {
+    public ExpectedNode (Long id, String name){
+      super(name);
+      super.id = id;
+    }
   }
-
-
 }

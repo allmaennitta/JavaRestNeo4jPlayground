@@ -6,6 +6,8 @@
         </encoder>
     </appender>
 
+    <!--<logger name="org.neo4j.ogm.drivers.http" level="debug" />-->
+
     <!--<appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
         <!--<file>/tmp/test.log</file>-->
         <!--<append>true</append>-->

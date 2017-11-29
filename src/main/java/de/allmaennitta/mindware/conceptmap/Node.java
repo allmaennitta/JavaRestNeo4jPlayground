@@ -17,20 +17,17 @@ public class Node {
 
   public Node() { }
 
-  public Node(String name) { this.name = name;}
+  public Node(String name) {
+    this.name = name;
+  }
 
-
-
-  Long id;
+  @GraphId
+  protected Long id;
 
   public Long getId() { return id;}
 
-  protected void setId(Long id) { this.id = id;}
-  @GraphId
   String name;
-
   public String getName() { return this.name;}
-
   public void setName(String name) { this.name = name;}
 
   @Relationship(type = "IS_A", direction = Relationship.OUTGOING)
@@ -38,6 +35,14 @@ public class Node {
 
   @Relationship(type = "HAS_SUBTYPES", direction = Relationship.OUTGOING)
   List<Node> subtypes;
+
+  @Override
+  public String toString() {
+    return "Node{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        '}';
+  }
 
   @Override
   public boolean equals(Object o) {

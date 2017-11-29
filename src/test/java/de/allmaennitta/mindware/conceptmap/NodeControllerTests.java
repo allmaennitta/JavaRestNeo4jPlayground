@@ -7,6 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.jayway.jsonpath.JsonPath;
+import de.allmaennitta.mindware.conceptmap.utils.DBInitializer;
+import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,20 @@ public class NodeControllerTests {
   @Autowired
   private MockMvc mockMvc;
 
+  @Autowired
+  NodeRepository rep;
+
+  private static boolean dbInitialized = false;
+
+  @Before
+  public void initialize() {
+
+    if (!dbInitialized) {
+      new DBInitializer(rep).init();
+      dbInitialized = true;
+    }
+  }
+
   @Test
   public void findRoot() throws Exception {
     this.mockMvc.perform(get("/")
@@ -35,25 +53,34 @@ public class NodeControllerTests {
 
   @Test
   public void allNodes() throws Exception {
-    this.mockMvc.perform(get("/node/all")
+    String json = this.mockMvc.perform(get("/node/all")
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.nodes[0].name").value("Amsel"));
+        .andReturn().getResponse().getContentAsString();
+
+    List<String> result = JsonPath.parse(json).read("$.nodes[*].name");
+    assertThat(result).contains("Cuckoo", "Eukaryota");
   }
 
   @Test
   public void nodeByName() throws Exception {
-    this.mockMvc.perform(get("/node/Amsel")
+    this.mockMvc.perform(get("/node/Opisthokonta")
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("@.id").value(1));
+        .andExpect(jsonPath("@.name").value("Opisthokonta"));
   }
 
-
   @Test
-  public void multiplicationOfZeroIntegersShouldReturnZero() {
-    assertThat("a").as("test context").isEqualTo("a");
+  public void nodeCreate() throws Exception {
+    this.mockMvc.perform(
+      get("/node/create/ControllerTestknoten")
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"));
+
+    Node node = rep.findByName("ControllerTestknoten");
+    rep.delete(node.getId());
   }
 }
