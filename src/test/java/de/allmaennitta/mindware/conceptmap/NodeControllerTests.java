@@ -2,6 +2,7 @@ package de.allmaennitta.mindware.conceptmap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -74,13 +75,16 @@ public class NodeControllerTests {
 
   @Test
   public void nodeCreate() throws Exception {
-    this.mockMvc.perform(
-      get("/node/create/ControllerTestknoten")
-        .accept(MediaType.APPLICATION_JSON_UTF8))
+    this.mockMvc.
+      perform(
+        post("/node/create").
+        content("{\"name\":\"ControllerTestKnoten\"}").
+        contentType(MediaType.APPLICATION_JSON)
+      )
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"));
 
-    Node node = rep.findByName("ControllerTestknoten");
+    Node node = rep.findByName("ControllerTestKnoten");
     rep.delete(node.getId());
   }
 }

@@ -27,8 +27,6 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
-
 dependencyManagement {
     imports {
         mavenBom 'io.spring.platform:platform-bom:Brussels-SR5'
@@ -37,29 +35,35 @@ dependencyManagement {
 
 
 dependencies {
+    //WEB
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'javax.servlet', name: 'javax.servlet-api'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
 
-//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-neo4j'
-//    compile group: 'org.hsqldb', name: 'hsqldb'
-//    compile group: 'org.hibernate', name: 'hibernate-validator'
-//    compile group: 'org.springframework.data', name: 'spring-data-neo4j'
-//    compile 'org.neo4j.driver:neo4j-java-driver:1.4.5'
-//    compile group: 'org.neo4j.driver', name: 'neo4j-java-driver', version: '1.4.5'
-
-    compile group: 'ch.qos.logback', name: 'logback-classic'
+    //JACKSON
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 //    compile group: 'com.fasterxml.jackson.core.dataformat', name: 'jackson-dataformat-yaml'
 
-//    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.5'
+    //DATA
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-neo4j'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+//    compile group: 'org.hsqldb', name: 'hsqldb'
+//    compile group: 'org.hibernate', name: 'hibernate-validator'
+//    compile group: 'org.springframework.data', name: 'spring-data-neo4j'
+//    compile 'org.neo4j.driver:neo4j-java-driver:1.4.5'
+//    compile group: 'org.neo4j.driver', name: 'neo4j-java-driver', version: '1.4.5'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    compile group: 'javax.servlet', name: 'javax.servlet-api'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+    //COMMON UTILS
+    compile group: 'ch.qos.logback', name: 'logback-classic'
+
+    //UNIT-TESTING
+    compileTest group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    compileTest group: 'io.rest-assured', name: 'rest-assured', version: '3.0.5'
+    compileTest group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.3.0'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
 //    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core'
 //    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-el'
 //    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
