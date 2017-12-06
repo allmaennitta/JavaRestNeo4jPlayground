@@ -1,26 +1,21 @@
-package de.allmaennitta.mindware.conceptmap;
+package de.allmaennitta.mindware.conceptmap.node;
 
+import de.allmaennitta.mindware.conceptmap.node.Node;
+import de.allmaennitta.mindware.conceptmap.node.NodeRepository;
 import de.allmaennitta.mindware.conceptmap.utils.DBInitializer;
 import java.util.List;
 import org.junit.*;
 import org.junit.runner.*;
-import org.neo4j.ogm.config.Configuration;
-import org.neo4j.ogm.session.Session;
-import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
-public class JPATests {
+public class NodeJPATests {
   @Autowired
   private NodeRepository repository;
 

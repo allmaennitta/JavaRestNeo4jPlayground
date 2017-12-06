@@ -1,4 +1,4 @@
-package de.allmaennitta.mindware.conceptmap;
+package de.allmaennitta.mindware.conceptmap.node;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.jayway.jsonpath.JsonPath;
+import de.allmaennitta.mindware.conceptmap.node.Node;
+import de.allmaennitta.mindware.conceptmap.node.NodeRepository;
 import de.allmaennitta.mindware.conceptmap.utils.DBInitializer;
 import java.util.List;
 import org.junit.Before;

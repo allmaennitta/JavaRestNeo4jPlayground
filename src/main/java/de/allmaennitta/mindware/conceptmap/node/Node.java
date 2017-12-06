@@ -1,16 +1,10 @@
-package de.allmaennitta.mindware.conceptmap;
+package de.allmaennitta.mindware.conceptmap.node;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 //import javax.persistence.GeneratedValue;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
-import org.springframework.data.annotation.Id;
 
 @NodeEntity
 public class Node {

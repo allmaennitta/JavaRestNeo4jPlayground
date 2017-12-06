@@ -1,4 +1,4 @@
-package de.allmaennitta.mindware.conceptmap;
+package de.allmaennitta.mindware.conceptmap.node;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -7,11 +7,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.jayway.jsonpath.JsonPath;
+import de.allmaennitta.mindware.conceptmap.node.Node;
+import de.allmaennitta.mindware.conceptmap.node.NodeRepository;
 import de.allmaennitta.mindware.conceptmap.utils.DBInitializer;
 import io.restassured.RestAssured;
+import io.restassured.function.RestAssuredFunction;
+import io.restassured.http.ContentType;
+import io.restassured.matcher.ResponseAwareMatcher;
+import io.restassured.parsing.Parser;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Validatable;
+import io.restassured.response.ValidatableResponseLogSpec;
+import io.restassured.response.ValidatableResponseOptions;
+import io.restassured.specification.ResponseSpecification;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +39,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @TestConfiguration
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class IntegrationTests {
+public class NodeIntegrationTests {
 
   @LocalServerPort
   int port;
@@ -38,6 +51,7 @@ public class IntegrationTests {
 
   @Before
   public void initialize() {
+    RestAssured.port = port;
 
     if (!dbInitialized) {
       new DBInitializer(rep).init();
@@ -46,15 +60,14 @@ public class IntegrationTests {
   }
 
   @Test
-  public void rootTest() {
-    RestAssured.port = port;
+  public void allNodesTest() {
     String json =
         when().
-            get("/").
+            get("/node/all").
             then().
             contentType(JSON).
             statusCode(200).
-    extract().
+            extract().
             response().body().print();
 
     List<String> result = JsonPath.parse(json).read("$.nodes[*].name");
@@ -63,33 +76,31 @@ public class IntegrationTests {
 
   @Test
   public void byNameTest() throws IOException {
-    RestAssured.port = port;
     Node jsonNode =
         when().
             get("/node/Chordata").
-          then().
+            then().
             contentType(JSON).
             statusCode(200).
-          extract().
+            extract().
             response().body().as(Node.class);
 
     assertThat(jsonNode.getName()).isEqualTo("Chordata");
   }
 
+
   @Test
   public void createTest() {
-
-    RestAssured.port = port;
     Node nodeCreated =
         given().
             contentType("application/json").
             body(new Node("Testknoten")).
-        when().
+          when().
             post("/node/create").
           then().
             contentType(JSON).
             statusCode(200).
-            extract().
+          extract().
             response().body().as(Node.class);
 
     Long id = nodeCreated.getId();

@@ -1,12 +1,7 @@
 package de.allmaennitta.mindware.conceptmap.utils;
 
-import de.allmaennitta.mindware.conceptmap.Node;
-import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import de.allmaennitta.mindware.conceptmap.node.Node;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.Repository;
-import org.springframework.stereotype.Component;
 
 
 public class DBInitializer {
