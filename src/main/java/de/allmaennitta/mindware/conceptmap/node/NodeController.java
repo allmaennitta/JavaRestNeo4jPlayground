@@ -1,54 +1,70 @@
 package de.allmaennitta.mindware.conceptmap.node;
 
-import java.util.HashMap;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 @RestController
-//@RequestMapping(path="/node")
-class NodeController {
+@RequestMapping(path = "/node")
+public class NodeController {
 
   private static final Logger LOG = LoggerFactory.getLogger(NodeController.class);
 
   @Autowired
   NodeRepository nodeRepository;
 
-  private static final String ROOT_REDIRECT = "/node/all";
+  @RequestMapping(method = RequestMethod.GET)
+  public Resources<Resource<Node>> getAllNodes() {
+    return nodesToResources(this.nodeRepository.getAllNodes());
+  }
 
-  @RequestMapping(value = "/")
-  public void handleRootRequest(HttpServletResponse response) {
-    try {
-      response.sendRedirect(ROOT_REDIRECT);
-    } catch (IOException e) {
-      throw new IllegalStateException(
-          String.format("There is an error redirecting to URL %s", ROOT_REDIRECT));
+  @RequestMapping(value = "/by", method = RequestMethod.GET)
+  public Resource<Node> getNode(@RequestParam("name") String name) {
+    return nodeToResource(this.nodeRepository.findByName(name));
+  }
+
+  @RequestMapping(method = RequestMethod.PUT)
+  public Resource<Node> create(@RequestBody Node input) {
+    return nodeToResource(this.nodeRepository.save(input));
+  }
+
+  @RequestMapping(value = "/start", method = RequestMethod.GET)
+  public Resource<Node> getStartNode() {
+    List<Node> result = this.nodeRepository.getFirst(); // should be a list with  one element
+
+    Objects.requireNonNull(result, "node list could be empty but never be null");
+    if (result.isEmpty()) {
+      throw new IllegalStateException("There should be exactly one node "
+          + "labeled with 'start'.");
     }
+    return nodeToResource(result.get(0));
   }
 
-  @RequestMapping(value = ROOT_REDIRECT, method = RequestMethod.GET)
-  Map<String,List<Node>> getAllNodes() {
-    Map nodes = new HashMap();
-    nodes.put("nodes", nodeRepository.findAllNodes());
-    return nodes;
+  private Resources<Resource<Node>> nodesToResources(List<Node> nodes) {
+    return new Resources<>(
+        nodes.stream().
+            map(node -> nodeToResource(node)).
+            collect(Collectors.toList()),
+        linkTo(methodOn(NodeController.class).getAllNodes()).withSelfRel());
   }
 
-  @RequestMapping(value = "/node/{name}", method = RequestMethod.GET)
-  Node getNode(@PathVariable("name") String name) {
-    return nodeRepository.findByName(name);
+
+  private Resource<Node> nodeToResource(Node node) {
+    return new Resource<>(
+        node,
+        linkTo(methodOn(NodeController.class).getAllNodes()).withSelfRel());
   }
 
-  @RequestMapping(value = "/node/create", method = RequestMethod.POST)
-  Node create(@RequestBody Node input) {
-    return this.nodeRepository.save(input);
-  }
 }
 //
 //    @GetMapping

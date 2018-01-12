@@ -68,7 +68,7 @@ public class NodeControllerTests {
 
   @Test
   public void nodeByName() throws Exception {
-    this.mockMvc.perform(get("/node/Opisthokonta")
+    this.mockMvc.perform(get("/node/byname/Opisthokonta")
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))

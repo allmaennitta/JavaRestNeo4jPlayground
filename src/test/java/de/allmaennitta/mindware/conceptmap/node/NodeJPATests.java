@@ -1,7 +1,5 @@
 package de.allmaennitta.mindware.conceptmap.node;
 
-import de.allmaennitta.mindware.conceptmap.node.Node;
-import de.allmaennitta.mindware.conceptmap.node.NodeRepository;
 import de.allmaennitta.mindware.conceptmap.utils.DBInitializer;
 import java.util.List;
 import org.junit.*;
@@ -32,7 +30,7 @@ public class NodeJPATests {
 
   @Test
   public void testAllNodes() {
-    List<Node> nodes = this.repository.findAllNodes();
+    List<Node> nodes = this.repository.getAllNodes();
     assertThat(nodes.size()).isGreaterThan(5);
   }
 

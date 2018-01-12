@@ -78,7 +78,7 @@ public class NodeIntegrationTests {
   public void byNameTest() throws IOException {
     Node jsonNode =
         when().
-            get("/node/Chordata").
+            get("/node/byname/Chordata").
             then().
             contentType(JSON).
             statusCode(200).

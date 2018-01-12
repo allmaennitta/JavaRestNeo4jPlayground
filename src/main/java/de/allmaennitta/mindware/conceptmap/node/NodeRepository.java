@@ -9,5 +9,8 @@ public interface NodeRepository extends Neo4jRepository<Node, Long> {
   Node findByName(String name);
 
   @Query("MATCH (n:Node) return n")
-  List<Node> findAllNodes();
+  List<Node> getAllNodes();
+
+  @Query("MATCH (n:Node) WHERE n.label=='start' return n LIMIT 1")
+  List<Node> getFirst();
 }
